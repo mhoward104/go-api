@@ -37,7 +37,6 @@ func newServerStatus() *serverStatus {
 }
 
 func (s *serverStatus) getInfo(w http.ResponseWriter, r *http.Request) {
-	println("Getting Server Info...")
 	totalUpTime := time.Now().Sub(startingTime)
 
 	s.Lock()
