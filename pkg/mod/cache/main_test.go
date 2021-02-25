@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+//make a test call to the api to check return status, and contents.
 func TestGetInfo(t *testing.T) {
 	s := newServerStatus()
 

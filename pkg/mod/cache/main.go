@@ -17,6 +17,7 @@ const (
 	apiVersion = "1.0.0"
 )
 
+//struct containing information about the server/api
 type serverStatus struct {
 	Name        string `json:"Name"`
 	Description string `json:"Description"`
@@ -25,6 +26,7 @@ type serverStatus struct {
 	UpTime string `json:"UpTime"`
 }
 
+//constructor for serverStatus
 func newServerStatus() *serverStatus {
 	s := &serverStatus{
 		Name:        "exampleServer",
@@ -36,7 +38,9 @@ func newServerStatus() *serverStatus {
 	return s
 }
 
+//called with `/info`
 func (s *serverStatus) getInfo(w http.ResponseWriter, r *http.Request) {
+	//get uptime of the server
 	totalUpTime := time.Now().Sub(startingTime)
 
 	s.Lock()
@@ -49,11 +53,15 @@ func (s *serverStatus) getInfo(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
+	//initialize object
 	s := newServerStatus()
+	//get start time
 	startingTime = time.Now()
 
+	//enpoints
 	router.HandleFunc("/info", s.getInfo).Methods("GET")
 
+	//start the server
 	http.ListenAndServe(":8000", router)
 
 }
